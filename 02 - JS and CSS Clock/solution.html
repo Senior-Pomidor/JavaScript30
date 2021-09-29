@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+			<div class="indicator indicator-1"></div>
+			<div class="indicator indicator-2"></div>
+			<div class="indicator indicator-3"></div>
+			<div class="indicator indicator-4"></div>
+			<div class="indicator indicator-5"></div>
+			<div class="indicator indicator-6"></div>
+			<div class="indicator indicator-7"></div>
+			<div class="indicator indicator-8"></div>
+			<div class="indicator indicator-9"></div>
+			<div class="indicator indicator-10"></div>
+			<div class="indicator indicator-11"></div>
+			<div class="indicator indicator-12"></div>
+
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+			position: relative;
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+		.indicator {
+			position: absolute;
+			left: calc(50% - 2px);
+			bottom: 50%;
+			width: 4px;
+			height: 49%;
+			/* background-color: red; */
+			transform-origin: bottom;
+			/* transform: rotate(90deg) */
+		}
+
+		.indicator::before {
+			position: absolute;
+			left: 0;
+			bottom: 100%;
+			content: '';
+			width: 5px;
+			height: 20px;
+			background-color: black;
+		}
+
+		.indicator-1 {
+			transform: rotate(30deg);
+		}
+
+		.indicator-2 {
+			transform: rotate(calc(30deg * 2));
+		}
+
+		.indicator-3 {
+			transform: rotate(calc(30deg * 3));
+		}
+
+		.indicator-4 {
+			transform: rotate(calc(30deg * 4));
+		}
+
+		.indicator-5 {
+			transform: rotate(calc(30deg * 5));
+		}
+
+		.indicator-6 {
+			transform: rotate(calc(30deg * 6));
+		}
+
+		.indicator-7 {
+			transform: rotate(calc(30deg * 7));
+		}
+
+		.indicator-8 {
+			transform: rotate(calc(30deg * 8));
+		}
+
+		.indicator-9 {
+			transform: rotate(calc(30deg * 9));
+		}
+
+		.indicator-10 {
+			transform: rotate(calc(30deg * 10));
+		}
+
+		.indicator-11 {
+			transform: rotate(calc(30deg * 11));
+		}
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+		.clock-face::before,
+		.clock-face::after {
+			position: absolute;
+			content: '';
+			border-radius: 50%;
+			z-index: 10;
+		}
+
+		.clock-face::before {
+			left: calc(50% - 13px);
+			top: calc(50% - 13px);
+			width: 26px;
+			height: 26px;
+			background-color: black;
+    }
+
+		.clock-face::after {
+			left: calc(50% - 4px);
+			top: calc(50% - 4px);
+			width: 8px;
+			height: 8px;
+			background-color: gold;
+    }
+
+    .hand {g
+      position: absolute;
+      top: 50%;
+      width: 50%;
+      height: 6px;
+      background: black;
+			margin-top: -3px;
+			transform-origin: 100% 50%;
+      transform: rotate(90deg);
+    }
+
+		.hour-hand {
+			height: 10px;
+			margin-top: -5px;
+		}
+
+		.second-hand {
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+		}
+
+
+  </style>
+
+  <script src="index.js"></script>
+</body>
+</html>
