@@ -18,13 +18,13 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <div class="img-wrapper">
-    <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
-  </div>
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
     :root {
       --spacing: 10px;
+      --blur:  10px;
+      --base-color: #ffc600;
     }
 
     /*
@@ -40,6 +40,10 @@
       font-size: 50px;
     }
 
+    .hl {
+      color: var(--base-color)
+    }
+
     .controls {
       margin-bottom: 50px;
     }
@@ -48,9 +52,10 @@
       width: 100px;
     }
 
-    .img-wrapper {
+    img {
       padding: var(--spacing);
-      border: 2px solid #d38a2b;
+      background-color:var(--base-color);
+      filter: blur(var(--blur));
     }
   </style>
 
