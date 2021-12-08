@@ -108,8 +108,12 @@
 
   function clickHandler(evt) {
     if (evt.shiftKey && lastChecked.checked) {
-      const lastIndex = checkboxList.indexOf(lastChecked);
-      const currentIndex = checkboxList.indexOf(this);
+      let lastIndex = checkboxList.indexOf(lastChecked);
+      let currentIndex = checkboxList.indexOf(this);
+
+      if (lastIndex > currentIndex) {
+        [lastIndex, currentIndex] = [currentIndex, lastIndex]
+      }
 
       checkboxList.slice(lastIndex, currentIndex)
                   .forEach(checkbox => checkbox.checked = true);
