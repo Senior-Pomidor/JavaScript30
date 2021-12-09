@@ -27,6 +27,25 @@ body {
   overflow: hidden;
 }
 
+.outside {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #131313;
+}
+
+.outside.active {
+  display: block;
+}
+
+body.player--full .player {
+  max-width: 85%;
+  width: 85%;
+}
+
 /* This css is only applied when fullscreen is active. */
 .player:fullscreen {
   max-width: none;
@@ -98,10 +117,10 @@ body {
 }
 
 .progress__filled {
-  width: 50%;
-  background: #ffc600;
   flex: 0;
-  flex-basis: 50%;
+  flex-basis: 0%;
+  width: 0%;
+  background: #ffc600;
 }
 
 /* unholy css to style input type="range" */
