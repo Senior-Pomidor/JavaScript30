@@ -8,22 +8,43 @@
 <body>
 <script>
   // делал сам
-    let sequence = [83, 75, 65, 77]
-    let curSeq = []
-    let counter = 0
+  //   let sequence = [83, 75, 65, 77];
+  //   let currentSequence = [];
+  //   let counter = 0;
+
+  // document.addEventListener('keyup', (evt) => {
+  //   if (evt.keyCode === sequence[counter]) {
+  //     counter++;
+  //     currentSequence.push(evt.keyCode);
+
+  //     if (currentSequence.join('') === sequence.join('')) {
+  //       alert('поздравляю вас заскамили');
+  //     }
+  //   } else {
+  //     currentSequence = [];
+  //     counter = 0;
+  //   }
+  // })
+
+
+    let sequence = 'scam';
+    let currentSequence = '';
+    let counter = 0;
 
   document.addEventListener('keyup', (evt) => {
-    console.log(evt)
-    if (evt.keyCode == sequence[counter]) {
-      counter++
-      curSeq.push(evt.keyCode)
+    console.log(evt.key);
+    if (evt.key === sequence[counter]) {
+      counter++;
+      currentSequence += evt.key;
 
-      if (curSeq.join('') == sequence.join('')) {
-        alert('поздравляю вас заскамили')
+      if (currentSequence === sequence) {
+        alert('поздравляю вас заскамили');
+        currentSequence = '';
+        counter = 0;
       }
     } else {
-      curSeq = []
-      counter = 0
+      currentSequence = '';
+      counter = 0;
     }
   })
 </script>
