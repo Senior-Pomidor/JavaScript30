@@ -7,14 +7,27 @@
 <body>
 
   <script>
+    // смотрел видос
+
     // start with strings, numbers and booleans
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
+
     // and we want to make a copy of it.
+    const team = players
+    console.group('copy with "="')
+    console.log(players)
+    console.log(team)
+    console.groupEnd('copy with "="')
 
     // You might think we can just do something like this:
+    team[0] = 'zero' 
+    console.group("team[0] = 'zero'")
+    console.log(players)
+    console.log(team)
+    console.groupEnd("team[0] = 'zero'")
 
     // however what happens when we update that array?
 
@@ -27,10 +40,14 @@
     // So, how do we fix this? We take a copy instead!
 
     // one way
+    const team2 = players.slice(); // copy
 
     // or create a new array and concat the old one in
+    const team3 = [].concat(players); // copy
 
     // or use the new ES6 Spread
+    const team4 = [...players]; //copy
+    const team5 = Array.from(players) //copy
 
     // now when we update it, the original one isn't changed
 
@@ -39,17 +56,33 @@
     // with Objects
     const person = {
       name: 'Wes Bos',
-      age: 80
+      age: 80,
+      data: {
+        pass: '1234'
+      }
     };
 
     // and think we make a copy:
+    console.group("Object.assign")
+    console.log(person)
 
     // how do we take a copy instead?
+    const person2 = Object.assign({}, person, {number: 99, age: 13}); // клонирует только первый уровень. Следующие уровни референсы
+    console.log(person2)
+    console.log(person)
+    console.groupEnd("Object.assign")
 
+    console.log(Object.assign([], person)) // у такого массива в индексах вместо чисел будут ключи объекта (name, age...)
     // We will hopefully soon see the object ...spread
+
+    // spread для объектов уже работает
+    const person3 = {...person} // клонирует только первый уровень.
+    // console.log('person3', person3)
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
 
+    const person4 = JSON.parse(JSON.stringify(person)) // хак для глубокого копирования
+    console.log('person4', person4)
   </script>
 
 </body>
