@@ -4,52 +4,74 @@
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
 </head>
-<body>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+      }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      min-height: 100vh;
-    }
+      #bands {
+        list-style: inside square;
+        font-size: 20px;
+        background: white;
+        width: 500px;
+        margin: auto;
+        padding: 0;
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+      }
+      
+      #bands li {
+        border-bottom: 1px solid #efefef;
+        padding: 20px;
+      }
+      
+      #bands li:last-child {
+        border-bottom: 0;
+      }
 
-    #bands {
-      list-style: inside square;
-      font-size: 20px;
-      background: white;
-      width: 500px;
-      margin: auto;
-      padding: 0;
-      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
-    }
-    
-    #bands li {
-      border-bottom: 1px solid #efefef;
-      padding: 20px;
-    }
-    
-    #bands li:last-child {
-      border-bottom: 0;
-    }
+      a {
+        color: #ffc600;
+        text-decoration: none;
+      }
 
-    a {
-      color: #ffc600;
-      text-decoration: none;
-    }
+    </style>
 
-  </style>
+    <ul id="bands">
 
-  <ul id="bands"></ul>
+    </ul>
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+    <script>
+      // начал сам, функцию обрезки артикля removeArticle подсмотрел реализацию, хотел с массивом, не получилось
+      // 
+      const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+      // const articles = ['a ', 'an ', 'The ']
+      const $bands = document.querySelector('#bands')
+
+      function removeArticle(str) {
+        return str.replace(/^(a |the |an )/i, '').trim();
+      }
+
+      let sorted = bands.sort((a, b) => removeArticle(a) > removeArticle(b) ? 1 : -1)
 
 
-</script>
+      function renderList(list) {
+        list.forEach(band => {
+          html = `
+            <li>
+              ${band}
+            </li>
+          `
+          $bands.insertAdjacentHTML('beforeEnd', html)
+        })
+      }
 
-</body>
+      renderList(sorted)
+    </script>
+  </body>
 </html>
