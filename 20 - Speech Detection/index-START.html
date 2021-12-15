@@ -1,61 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Speech Detection</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Speech Detection</title>
 
-  <div class="words" contenteditable>
-  </div>
+    <style>
+      html {
+        font-size: 10px;
+      }
 
-<script>
-  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      body {
+        background: #ffc600;
+        font-family: 'helvetica neue';
+        font-weight: 200;
+        font-size: 20px;
+      }
 
+      .words {
+        max-width: 500px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+        padding: 1rem 2rem 1rem 5rem;
+        background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+        background-size: 100% 3rem;
+        position: relative;
+        line-height: 3rem;
+      }
+      
+      p {
+        margin: 0 0 3rem;
+      }
 
-</script>
-
-
-  <style>
-    html {
-      font-size: 10px;
-    }
-
-    body {
-      background: #ffc600;
-      font-family: 'helvetica neue';
-      font-weight: 200;
-      font-size: 20px;
-    }
-
-    .words {
-      max-width: 500px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 5px;
-      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
-      padding: 1rem 2rem 1rem 5rem;
-      background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
-      background-size: 100% 3rem;
-      position: relative;
-      line-height: 3rem;
-    }
+      .words:before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        top: 0;
+        left: 30px;
+        bottom: 0;
+        border: 1px solid;
+        border-color: transparent #efe4e4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="words" contenteditable>
+    </div>
     
-    p {
-      margin: 0 0 3rem;
-    }
+    <script>
+      // сам потыкал методы, потом по видосу
+      // в яндекс браузере ошибки, распознаёт только первое слово и то не всегда правильно
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    .words:before {
-      content: '';
-      position: absolute;
-      width: 4px;
-      top: 0;
-      left: 30px;
-      bottom: 0;
-      border: 1px solid;
-      border-color: transparent #efe4e4;
-    }
-  </style>
+      const $words = document.querySelector('.words');
+      const recognition = new SpeechRecognition();
+      recognition.interimResults = true;
+      recognition.lang = 'ru-Ru';
+      // recognition.continuous = true;
+      // recognition.lang = 'ru-Ru';
 
-</body>
+      // recognition.start()
+
+      // recognition.onresult = (evt) => {
+      //   console.log(evt.results[0][0].transcript)
+      // }
+
+      // recognition.onspeechstart = () => {
+      //   console.log('123')
+      // }
+
+      let p = document.createElement('p');
+      $words.appendChild(p);
+
+      recognition.onresult = evt => {
+        const transcript = [...evt.results]
+                                .map(result => result[0])
+                                .map(result => result.transcript)
+                                .join('');
+        p.textContent = transcript;
+
+        if (evt.results[0].isFinal) {
+          p = document.createElement('p');
+          $words.appendChild(p);
+        }
+      }
+
+      recognition.onend = () => {
+        let p = document.createElement('p');
+        recognition.start();
+      }
+
+      recognition.start();
+    </script>
+  </body>
 </html>
