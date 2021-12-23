@@ -40,9 +40,25 @@
   }
 </style>
 
-<button></button>
+<button>Click</button>
 <script>
+  const $divs = document.querySelectorAll('div')
+  const $button = document.querySelector('button')
 
+  function handleClick(evt) {
+    console.log(this)
+    // console.log(evt.target)
+
+    evt.stopPropagation() // останавливает распространение (bubbling)
+  }
+
+  // document.body.addEventListener('click', handleClick)
+  $divs.forEach(div => div.addEventListener('click', handleClick, {
+    capture: false, // событие распространяется внутрь, а не наружу
+    once: true // удаляет слушатель события после первого выполнения
+  }));
+
+  $button.addEventListener('click', () => console.log('Once clicked!'), {once: true})
 </script>
 </body>
 </html>
