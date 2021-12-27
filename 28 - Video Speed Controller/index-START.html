@@ -5,16 +5,53 @@
   <title>Video Speed Scrubber</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+  <body>
 
-  <div class="wrapper">
-    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
-    <div class="speed">
-      <div class="speed-bar">1×</div>
+    <div class="wrapper">
+      <video class="video flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
+      <div class="speed">
+        <div class="speed-bar">1×</div>
+      </div>
     </div>
-  </div>
 
-<script>
-</script>
-</body>
+    <script>
+      // начал сам, подсмотрел согласование с мин и макс скоростью
+      const $speed = document.querySelector('.speed');
+      const $speedBar = $speed.querySelector('.speed-bar');
+      const $video = document.querySelector('.video');
+
+      function updateSpeed(evt) {
+        const minSpeed = 0.25;
+        const maxSpeed = 4;
+        const range = maxSpeed - minSpeed;
+
+        const mouseY = evt.pageY - this.offsetTop;
+        const height = this.offsetHeight;
+        const percent = mouseY / height * 100;
+
+        let rate = (range * percent * 0.01 + minSpeed).toFixed(2);
+        $speedBar.style.height = `${percent}%`;
+        $speedBar.textContent = `${rate}x`;
+
+        $video.playbackRate = rate;
+      }
+
+      $speed.addEventListener('mousemove', updateSpeed);
+    </script>
+  </body>
 </html>
+
+<!-- Алгоритм
+Навесить обработчик маусмув
+в обработчиках функция изменения скорости
+Функция изменения скорости:
+  высота полоски
+  начальная координата бара
+  положение курсора относительно верха полоски
+  0-4 скорость
+  процент изменения высоты
+  макс скорость умножать на процент (upd: нужно согласовать с мин и макс скоростью)
+  умножить высоту бара на процент
+  вывести в бар текущую скорость -->
+
+

@@ -1,6 +1,9 @@
+// сам, подсмотрел разделение на отдельные функции отрисовки времени и таймера
+
 const $controls = [...document.querySelectorAll('[data-time]')];
 const $displayTimer = document.querySelector('.display__time-left');
 const $entTime = document.querySelector('.display__end-time');
+const $customForm = document.querySelector('#custom');
 let counter = null;
 
 console.log($controls)
@@ -10,21 +13,19 @@ const showEndTime = (seconds) => {
 	let timestamp = Date.now() + seconds * 1000;
 	let endDate = new Date(timestamp);
 
-	$entTime.textContent = `Be back at ${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`
+	$entTime.textContent = `Be back at ${endDate.getHours()}:${endDate.getMinutes()}:${endDate.getSeconds()}`;
 }
 
 const showLeftTime = (seconds) => {
 	// отображение оставшегося время
 		let mins = Math.floor(seconds / 60);
 		let secondsLeft = seconds % 60;
-		$displayTimer.textContent = `${mins}:${secondsLeft}`
+		$displayTimer.textContent = `${mins}:${secondsLeft}`;
 }
 
-const timer = (evt) => {
+const timer = (seconds) => {
 	clearInterval(counter)
 	// отсчитывает время и каждую секунду обновляет вывод
-	let seconds = parseInt(evt.target.dataset.time);
-	// console.log(seconds)
 
 	showLeftTime(seconds)
 	showEndTime(seconds)
@@ -39,8 +40,21 @@ const timer = (evt) => {
 	}, 1000)
 }
 
-$controls.forEach(control => control.addEventListener('click', timer))
+const startTimer = (evt) => {
+	let seconds = parseInt(evt.target.dataset.time);
+	timer(seconds)
+}
 
+$controls.forEach(control => control.addEventListener('click', startTimer))
+$customForm.addEventListener('submit', evt => {
+	evt.preventDefault();
+	let seconds = parseFloat(evt.target.minutes.value) * 60;
+
+	if (seconds) { 
+		timer(seconds);
+	}
+	evt.target.minutes.value = ''
+})
 
 // АЛГОРИТМ
 // нажатие кнопки
