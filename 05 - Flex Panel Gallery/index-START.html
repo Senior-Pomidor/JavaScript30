@@ -13,12 +13,12 @@
       <p>Let's</p>
       <p>Dance</p>
     </div>
-    <div class="panel panel2">
+    <div class="panel panel2 open open-active">
       <p>Give</p>
       <p>Take</p>
       <p>Receive</p>
     </div>
-    <div class="panel panel3 open">
+    <div class="panel panel3">
       <p>Experience</p>
       <p>It</p>
       <p>Today</p>
@@ -36,37 +36,32 @@
   </div>
 
   <script>
-    const panels = document.querySelectorAll('.panel');
+    const $panels = document.querySelectorAll('.panel');
+    const transitionDuration = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--transition-duration'));
 
-    panels.forEach(panel => {
+    $panels.forEach(panel => {
       panel.addEventListener('click', function() {
         clearOpenClass();
-        // clearOpenActiveClass();
         this.classList.add('open');
-      });
-    });
 
-    panels.forEach(panel => {
-      panel.addEventListener('transitionend', function(evt) {
-        console.log(evt.propertyName)
-        if (evt.propertyName.includes('flex')) {
+        setTimeout(() => {
           clearOpenActiveClass();
           this.classList.add('open-active');
-        };
+        }, transitionDuration * 1000);
       });
     });
 
     function clearOpenClass() {
-      panels.forEach(panel => {
+      $panels.forEach(panel => {
         panel.classList.remove('open');
       })
     }
     
-    // function clearOpenActiveClass() {
-    //   panels.forEach(panel => {
-    //     panel.classList.remove('open-active');
-    //   })
-    // }
+    function clearOpenActiveClass() {
+      $panels.forEach(panel => {
+        panel.classList.remove('open-active');
+      })
+    }
   </script>
 </body>
 </html>
