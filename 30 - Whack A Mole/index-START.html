@@ -33,10 +33,67 @@
   </div>
 
 <script>
-  const holes = document.querySelectorAll('.hole');
-  const scoreBoard = document.querySelector('.score');
-  const moles = document.querySelectorAll('.mole');
+  const $holes = document.querySelectorAll('.hole');
+  const $scoreBoard = document.querySelector('.score');
+  const $moles = document.querySelectorAll('.mole');
+  let lastHole = null;
+  let counter = 0;
 
+  const randomTime = (min, max) => {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  const randomHole = (holes) => {
+    const index = Math.round(Math.random() * (holes.length - 1));
+    const hole = holes[index];
+    let timeUp = false;
+
+    if (lastHole === hole) {
+      // для избежания повторения дыры
+      return randomHole(holes)
+    } else {
+      lastHole = hole;
+      return holes[index];
+    }    
+  }
+
+  const peep = () => {
+    const time = randomTime(200, 1000);
+    const hole = randomHole($holes);
+
+    hole.classList.add('up');
+
+    setTimeout(() => {
+      hole.classList.remove('up')
+      if (!timeUp) peep();
+    }, time)
+  }
+
+  const startGame = () => {
+    $scoreBoard.textContent = 0;
+    timeUp = false;
+    counter = 0;
+    peep();
+
+    setTimeout(() => timeUp = true, 10000)
+  }
+  
+  const bonk = (evt) => {
+    if (!evt.isTrusted) return; // проверка на эмуляцию нажатия
+    counter++;
+    evt.target.classList.remove('up');
+    $scoreBoard.textContent = counter;
+  }
+
+  $moles.forEach(mole => mole.addEventListener('click', bonk));
 </script>
 </body>
 </html>
+
+
+<!-- 1. рандомайзер времени -->
+<!-- 2. рандомайзер для выбора дыры -->
+<!-- 3. добавление класса up и удаление через рандомный промежуток времени, работает пока не изменится флаг -->
+<!-- 4. функция запуска игры: обнуляет все знчения, запускает функцию анимации, через определённый промежуток меняет флаг для анимации -->
+<!-- 5. функция обработки клика по фигуре: при клике +очко, скрытие фигуры -->
+<!-- 6. перепистаь под локалсторадж -->
